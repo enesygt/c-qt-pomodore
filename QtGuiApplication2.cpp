@@ -7,24 +7,33 @@
 QtGuiApplication2::QtGuiApplication2(QWidget * parent)
     : QMainWindow(parent)
 {
+    /**  Call main setup function. */
+    main_setup();
+}
+
+void QtGuiApplication2::main_setup()
+{
     ui.setupUi(this);
 
     timer = new
       QTimer(this);
+
+    /** Timer show style changed.*/
     t = QTime::fromString("25:00", "mm:ss");
 
-	QString time_text = t.toString( "mm:ss" );
-	ui.label->setText( time_text );
+    QString time_text = t.toString("mm:ss");
+    ui.label->setText(time_text);
 
     connect(timer, &QTimer::timeout, this, &QtGuiApplication2::myfunction);
     QObject::connect(ui.startButton, &QPushButton::clicked, this, &QtGuiApplication2::chrono_start);
     QObject::connect(ui.stopButton, &QPushButton::clicked, this, &QtGuiApplication2::chrono_stop);
 
+    // This can be used if you want  to use slot.
     //   QObject::connect(ui.selectMinutes, SIGNAL(currentTextChanged(QString)), this,
     //   SLOT(chrono_stop_2()) );
 
     QObject::connect(ui.selectMinutes, &QComboBox::currentTextChanged, this,
-      &QtGuiApplication2::chrono_stop);
+      &QtGuiApplication2::change_minutes);
 }
 
 void QtGuiApplication2::myfunction()
@@ -57,6 +66,17 @@ QtGuiApplication2::chrono_stop()
 {
     timer->stop();
     run_flag = false;
+}
+
+void QtGuiApplication2::change_minutes()
+{
+
+
+    if (ui.selectMinutes->currentText() == "25 Minutes") {
+        t = QTime::fromString("40:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    }
 }
 
 /** This function is for example of slot connection with function. */
