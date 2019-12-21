@@ -24,9 +24,13 @@ void QtGuiApplication2::main_setup()
     QString time_text = t.toString("mm:ss");
     ui.label->setText(time_text);
 
+    ui.durum->setText("Ready :)");
+
     connect(timer, &QTimer::timeout, this, &QtGuiApplication2::myfunction);
     QObject::connect(ui.startButton, &QPushButton::clicked, this, &QtGuiApplication2::chrono_start);
     QObject::connect(ui.stopButton, &QPushButton::clicked, this, &QtGuiApplication2::chrono_stop);
+    QObject::connect(ui.reset_button, &QPushButton::clicked, this, &QtGuiApplication2::reset);
+
 
     // This can be used if you want  to use slot.
     //   QObject::connect(ui.selectMinutes, SIGNAL(currentTextChanged(QString)), this,
@@ -34,6 +38,11 @@ void QtGuiApplication2::main_setup()
 
     QObject::connect(ui.selectMinutes, &QComboBox::currentTextChanged, this,
       &QtGuiApplication2::change_minutes);
+
+    ui.selectMinutes->setDisabled(false);
+    ui.startButton->setDisabled(false);
+    ui.stopButton->setDisabled(true);
+    ui.reset_button->setDisabled(true);
 }
 
 void QtGuiApplication2::myfunction()
@@ -60,6 +69,12 @@ QtGuiApplication2::chrono_start()
         run_flag = true;
 
         ui.selectMinutes->setDisabled(true);
+
+        ui.startButton->setDisabled(true);
+        ui.stopButton->setDisabled(false);
+        ui.reset_button->setDisabled(false);
+
+        ui.durum->setText("Work Hard :)");
     }
 }
 
@@ -68,8 +83,12 @@ QtGuiApplication2::chrono_stop()
 {
     timer->stop();
     run_flag = false;
-	ui.selectMinutes->setDisabled( false );
+    ui.selectMinutes->setDisabled(false);
+    ui.startButton->setDisabled(false);
+    ui.stopButton->setDisabled(true);
+    ui.reset_button->setDisabled(false);
 
+    ui.durum->setText("Stopped");
 }
 
 void QtGuiApplication2::change_minutes()
@@ -80,6 +99,35 @@ void QtGuiApplication2::change_minutes()
         ui.label->setText(time_text);
     } else if (ui.selectMinutes->currentText() == "40 Minutes") {
         t = QTime::fromString("40:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    } else if (ui.selectMinutes->currentText() == "130 Minutes") {
+        t = QTime::fromString("130:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    }
+}
+
+void QtGuiApplication2::reset()
+{
+    timer->stop();
+    run_flag = false;
+    ui.selectMinutes->setDisabled(false);
+    ui.startButton->setDisabled(false);
+    ui.stopButton->setDisabled(true);
+	ui.reset_button->setDisabled( true );
+
+    ui.durum->setText("Ready :)");
+    if (ui.selectMinutes->currentText() == "25 Minutes") {
+        t = QTime::fromString("25:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    } else if (ui.selectMinutes->currentText() == "40 Minutes") {
+        t = QTime::fromString("40:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    } else if (ui.selectMinutes->currentText() == "130 Minutes") {
+        t = QTime::fromString("130:00", "mm:ss");
         QString time_text = t.toString("mm:ss");
         ui.label->setText(time_text);
     }

@@ -21,6 +21,8 @@ public:
     chrono_stop();
     void
     change_minutes();
+	void
+		reset( );
     QTimer * timer;
 
     int a = 0;
