@@ -19,7 +19,8 @@ public:
     chrono_start();
     void
     chrono_stop();
-	void change_minutes( );
+    void
+    change_minutes();
     QTimer * timer;
 
     int a = 0;

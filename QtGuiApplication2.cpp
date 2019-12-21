@@ -58,6 +58,8 @@ QtGuiApplication2::chrono_start()
         /**  Timer start to work for  one second*/
         timer->start(1000);
         run_flag = true;
+
+        ui.selectMinutes->setDisabled(true);
     }
 }
 
@@ -66,13 +68,17 @@ QtGuiApplication2::chrono_stop()
 {
     timer->stop();
     run_flag = false;
+	ui.selectMinutes->setDisabled( false );
+
 }
 
 void QtGuiApplication2::change_minutes()
 {
-
-
     if (ui.selectMinutes->currentText() == "25 Minutes") {
+        t = QTime::fromString("25:00", "mm:ss");
+        QString time_text = t.toString("mm:ss");
+        ui.label->setText(time_text);
+    } else if (ui.selectMinutes->currentText() == "40 Minutes") {
         t = QTime::fromString("40:00", "mm:ss");
         QString time_text = t.toString("mm:ss");
         ui.label->setText(time_text);
