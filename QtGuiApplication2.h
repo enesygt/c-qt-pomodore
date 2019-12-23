@@ -21,8 +21,8 @@ public:
     chrono_stop();
     void
     change_minutes();
-	void
-		reset( );
+    void
+    reset();
     QTimer * timer;
 
     int a = 0;
@@ -30,7 +30,7 @@ public:
     QTime t2;
     bool run_flag;
 
-
+	int checkbox_counter = 0;
 private:
     /** Main interface*/
     Ui::QtGuiApplication2Class ui;
